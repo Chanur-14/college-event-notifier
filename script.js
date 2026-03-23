@@ -1,85 +1,98 @@
-// Firebase imports
-import { db } from "./firebase.js";
-import { auth } from "./firebase.js";
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    getDocs,
+    deleteDoc,
+    doc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-import { collection, getDocs, addDoc, deleteDoc, doc }
-    from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+import { app } from "./firebase.js";
 
-import { signInWithEmailAndPassword }
-    from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+const db = getFirestore(app);
 
-
-// Load events from Firestore
-async function loadEvents() {
-
-    const eventList = document.getElementById("eventList");
-
-    if (!eventList) return;
-
-    eventList.innerHTML = "";
-
-    const querySnapshot = await getDocs(collection(db, "events"));
-
-    let eventsArray = [];
-
-    querySnapshot.forEach((docSnap) => {
-        const data = docSnap.data();
-        const id = docSnap.id;
-
-        eventsArray.push({
-            id: id,
-            eventName: data.eventName,
-            date: data.date,
-            hostCollege: data.hostCollege
-        });
-    });
-
-    // sort by date
-    eventsArray.sort((a, b) => new Date(a.date) - new Date(b.date));
-
-    eventsArray.forEach(event => {
-
-        const eventDiv = document.createElement("div");
-        eventDiv.classList.add("event-card");
-        eventDiv.innerHTML = `
-        <div class="event-card">
-        <img src="${event.image}"
-        class="event-img">
-        
-        <h3>${event.eventName}</h3>
-        <p><b>Date:</b> ${event.date}</p>
-        <p><b>Hosted by:</b> ${event.hostCollege}</p>
-        <button onclick="registerEvent('${event.eventName}')">Register</button>
-        <button class="delete-btn" onclick="deleteEvent('${event.id}')">Delete</button>
-        </div>
-        `;
-        eventList.appendChild(eventDiv);
-
-    });
-
-}
+const eventsContainer = document.getElementById("events-container");
 
 loadEvents();
 
 
-// Add Event
-window.addEvent = async function () {
-    const image = document.getElementById("eventimage").value;
-    const eventName = document.getElementById("eventName").value;
-    const date = document.getElementById("date").value;
-    const hostCollege = document.getElementById("hostCollege").value;
-    addDoc(collection(db, "events"), {
-        eventName: eventName,
-        date: date,
-        hostCollege: hostCollege,
-        image: image
+// LOAD EVENTS
+async function loadEvents() {
+
+    eventsContainer.innerHTML = "";
+
+    const querySnapshot = await getDocs(collection(db, "events"));
+
+    querySnapshot.forEach((docItem) => {
+
+        const event = docItem.data();
+
+        const eventDiv = document.createElement("div");
+
+        eventDiv.classList.add("event-card");
+
+        eventDiv.innerHTML = `
+
+<img src="${event.image}" class="event-img">
+
+<h3>${event.eventName}</h3>
+
+<p><b>Date:</b> ${event.date}</p>
+
+<p><b>Hosted by:</b> ${event.hostcollege}</p>
+
+<button onclick="registerEvent('${event.eventName}')">Register</button>
+
+<button onclick="deleteEvent('${docItem.id}')">Delete</button>
+
+`;
+
+        eventsContainer.appendChild(eventDiv);
+
     });
-    alert("Event Added Successfully");
 
 }
 
 
-// Delete Event
+// ADD EVENT
+window.addEvent = async function () {
+
+    const eventName = document.getElementById("eventName").value;
+    const date = document.getElementById("date").value;
+    const hostcollege = document.getElementById("hostcollege").value;
+    const image = document.getElementById("eventimage").value;
+
+    if (!eventName || !date || !hostcollege) {
+        alert("Please fill all fields");
+        return;
+    }
+
+    try {
+
+        await addDoc(collection(db, "events"), {
+
+            eventName: eventName,
+            date: date,
+            hostcollege: hostcollege,
+            image: image
+
+        });
+
+        alert("Event Added Successfully");
+
+        loadEvents();
+
+    } catch (error) {
+
+        console.error(error);
+        alert("Error adding event");
+
+    }
+
+}
+
+
+// DELETE EVENT
 window.deleteEvent = async function (id) {
 
     try {
@@ -88,7 +101,7 @@ window.deleteEvent = async function (id) {
 
         alert("Event Deleted");
 
-        location.reload();
+        loadEvents();
 
     } catch (error) {
 
@@ -99,71 +112,40 @@ window.deleteEvent = async function (id) {
 }
 
 
-// Admin Login
-window.loginAdmin = async function () {
+// REGISTER EVENT
+window.registerEvent = async function (eventName) {
 
-    const email = document.getElementById("adminEmail").value;
-    const password = document.getElementById("adminPassword").value;
+    const studentName = prompt("Enter your name to register");
+
+    if (!studentName) {
+        alert("Registration cancelled");
+        return;
+    }
 
     try {
 
-        await signInWithEmailAndPassword(auth, email, password);
+        await addDoc(collection(db, "registrations"), {
 
-        alert("Login Successful");
+            event: eventName,
+            student: studentName,
+            time: new Date()
 
-        document.getElementById("adminPanel").style.display = "block";
+        });
+
+        alert("Successfully Registered for " + eventName);
 
     } catch (error) {
 
-        alert("Login Failed");
+        console.error(error);
+        alert("Registration failed");
 
     }
 
 }
 
 
-// Navigation Scroll
-document.querySelectorAll("nav a").forEach(link => {
-
-    link.addEventListener("click", function (e) {
-
-        e.preventDefault();
-
-        const section = document.querySelector(this.getAttribute("href"));
-
-        if (section) {
-
-            section.scrollIntoView({
-                behavior: "smooth"
-            });
-
-        }
-
-    });
-
-});
-
+// SEARCH EVENTS
 window.searchEvents = function () {
-    const input = document.getElementById("search").value.toLowerCase();
-    const events = document.querySelectorAll("#eventList div");
-    events.forEach(event => {
-
-        const text = event.innerText.toLowerCase();
-        if (text.includes(input)) {
-            event.style.display = "block";
-        }
-        else {
-            event.style.display = "none";
-
-        }
-    });
-}
-
-window.registerEvent = function (eventName) {
-    alert("You have successfully registered for " + eventName);
-}
-
-function searchEvents() {
 
     const searchValue = document.getElementById("search").value.toLowerCase();
 
@@ -175,7 +157,8 @@ function searchEvents() {
 
         if (title.innerHTML.toLowerCase().includes(searchValue)) {
             events[i].style.display = "block";
-        } else {
+        }
+        else {
             events[i].style.display = "none";
         }
 
