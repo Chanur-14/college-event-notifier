@@ -42,6 +42,8 @@ async function loadEvents() {
         const eventDiv = document.createElement("div");
         eventDiv.classList.add("event-card");
         eventDiv.innerHTML = `
+        <img src="${event.image}"
+        style="width:100%; border-radius:10px; margin-bottom :10px;">
         <h3>${event.eventName}</h3>
         <p>Date: ${event.date}</p>
         <p>Hosted by: ${event.hostCollege}</p>
@@ -60,28 +62,17 @@ loadEvents();
 
 // Add Event
 window.addEvent = async function () {
-
+    const image = document.getElementById("eventimage").value;
     const eventName = document.getElementById("eventName").value;
     const date = document.getElementById("date").value;
     const hostCollege = document.getElementById("hostCollege").value;
-
-    try {
-
-        await addDoc(collection(db, "events"), {
-            eventName: eventName,
-            date: date,
-            hostCollege: hostCollege
-        });
-
-        alert("Event Added Successfully");
-
-        location.reload();
-
-    } catch (error) {
-
-        console.error(error);
-
-    }
+    addDoc(collection(db, "events"), {
+        eventName: eventName,
+        date: date,
+        hostCollege: hostCollege,
+        image: image
+    });
+    alert("Event Added Successfully");
 
 }
 
