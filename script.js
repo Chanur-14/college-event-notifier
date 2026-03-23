@@ -45,7 +45,8 @@ async function loadEvents() {
         <h3>${event.eventName}</h3>
         <p>Date: ${event.date}</p>
         <p>Hosted by: ${event.hostCollege}</p>
-        <button onclick="deleteEvent('${event.id}')">Delete</button>
+        <button onclick="registerEvent('${event.eventName}')">Register</button>
+        <button class="delete-btn" onclick="deleteEvent('${event.id}')">Delete</button>
         `;
 
         eventList.appendChild(eventDiv);
@@ -163,4 +164,8 @@ window.searchEvents = function () {
 
         }
     });
+}
+
+function registerEvent(eventName) {
+    alert("You have successfully registered for " + eventName);
 }
