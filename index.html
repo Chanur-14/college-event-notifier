@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>College Event Notifier</title>
+  <!-- Add Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Add CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>College Event Notifier</h1>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#events">Events</a>
+      <a href="#admin">Admin</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home">
+      <h2>Welcome</h2>
+      <p>This website shows Upcoming College Events.</p>
+    </section>
+    <section id="events">
+      <input type="text" id="search" placeholder="Search events....." onkeyup="searchEvents()">
+      <h2>Upcoming Events</h2>
+      <div id="eventList">
+        <!-- Events will be displayed here -->
+      </div>
+    </section>
+    <section id="admin">
+      <h2>Add Event</h2>
+      <input type="text" id="eventName" placeholder="Event Name">
+      <input type="text" id="date" placeholder="Date">
+      <input type="text" id="hostCollege" placeholder="Host College">
+      <button onclick="addEvent()">Add Event</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 College Event Notifier</p>
+  </footer>
+
+  <script type="module" src="firebase.js"></script>
+  <script type="module" src="script.js"></script>
+</body>
+</html>
