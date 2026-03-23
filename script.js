@@ -39,7 +39,7 @@ async function loadEvents() {
 
 <p><b>Date:</b> ${event.date}</p>
 
-<p><b>Hosted by:</b> ${event.hostcollege}</p>
+<p><b>Hosted by:</b> ${event.hostCollege}</p>
 
 <button onclick="registerEvent('${event.eventName}')">Register</button>
 
@@ -59,10 +59,10 @@ window.addEvent = async function () {
 
     const eventName = document.getElementById("eventName").value;
     const date = document.getElementById("date").value;
-    const hostcollege = document.getElementById("hostcollege").value;
+    const hostCollege = document.getElementById("hostCollege").value;
     const image = document.getElementById("eventimage").value;
 
-    if (!eventName || !date || !hostcollege) {
+    if (!eventName || !date || !hostCollege) {
         alert("Please fill all fields");
         return;
     }
@@ -73,7 +73,7 @@ window.addEvent = async function () {
 
             eventName: eventName,
             date: date,
-            hostcollege: hostcollege,
+            hostCollege: hostCollege,
             image: image
 
         });
