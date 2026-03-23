@@ -42,15 +42,17 @@ async function loadEvents() {
         const eventDiv = document.createElement("div");
         eventDiv.classList.add("event-card");
         eventDiv.innerHTML = `
+        <div class="event-card">
         <img src="${event.image}"
-        style="width:100%; border-radius:10px; margin-bottom :10px;">
+        class="event-img">
+        
         <h3>${event.eventName}</h3>
-        <p>Date: ${event.date}</p>
-        <p>Hosted by: ${event.hostCollege}</p>
+        <p><b>Date:</b> ${event.date}</p>
+        <p><b>Hosted by:</b> ${event.hostCollege}</p>
         <button onclick="registerEvent('${event.eventName}')">Register</button>
         <button class="delete-btn" onclick="deleteEvent('${event.id}')">Delete</button>
+        </div>
         `;
-
         eventList.appendChild(eventDiv);
 
     });
