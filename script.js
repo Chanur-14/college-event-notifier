@@ -166,6 +166,6 @@ window.searchEvents = function () {
     });
 }
 
-function registerEvent(eventName) {
+window.registerEvent = function (eventName) {
     alert("You have successfully registered for " + eventName);
 }
