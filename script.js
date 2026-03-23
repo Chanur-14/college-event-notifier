@@ -56,7 +56,7 @@ async function loadEvents() {
 
 // ADD EVENT
 window.addEvent = async function () {
-
+    const eventsContainer = document.getElementById("events-container");
     const eventName = document.getElementById("eventName").value;
     const date = document.getElementById("date").value;
     const hostCollege = document.getElementById("hostCollege").value;
