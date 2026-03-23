@@ -25,7 +25,9 @@
       <p>This website shows Upcoming College Events.</p>
     </section>
     <section id="events">
+      <h2>Available Events</h2>
       <input type="text" id="search" placeholder="Search events....." onkeyup="searchEvents()">
+      <div id="events-container"></div>
       <h2>Upcoming Events</h2>
       <div id="eventList">
         <!-- Events will be displayed here -->
@@ -37,6 +39,7 @@
       <input type="text" id="date" placeholder="Date">
       <input type="text" id="hostCollege" placeholder="Host College">
       <input type="text" id="eventimage" placeholder="Enter Image URL">
+
       <button onclick="addEvent()">Add Event</button>
     </section>
   </main>

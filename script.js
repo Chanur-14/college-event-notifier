@@ -162,3 +162,23 @@ window.searchEvents = function () {
 window.registerEvent = function (eventName) {
     alert("You have successfully registered for " + eventName);
 }
+
+function searchEvents() {
+
+    const searchValue = document.getElementById("search").value.toLowerCase();
+
+    const events = document.getElementsByClassName("event-card");
+
+    for (let i = 0; i < events.length; i++) {
+
+        let title = events[i].getElementsByTagName("h3")[0];
+
+        if (title.innerHTML.toLowerCase().includes(searchValue)) {
+            events[i].style.display = "block";
+        } else {
+            events[i].style.display = "none";
+        }
+
+    }
+
+}
