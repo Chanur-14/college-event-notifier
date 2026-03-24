@@ -193,3 +193,9 @@ button {
 .delete-btn {
     background: red;
 }
+
+.countdown {
+    color: orange;
+    font-weight: bold;
+    margin: 10px 0;
+}

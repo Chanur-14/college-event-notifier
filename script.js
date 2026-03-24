@@ -49,6 +49,7 @@ async function loadEvents() {
         <h3>${event.eventName}</h3>
         <p><b>Date:</b> ${event.date}</p>
         <p><b>Hosted by:</b> ${event.hostCollege}</p>
+        <p class="countdown">${getCountdown(event.date)}</p>
         <button onclick="registerEvent('${event.eventName}')">Register</button>
         <button class="delete-btn" onclick="deleteEvent('${event.id}')">Delete</button>
         </div>
@@ -195,6 +196,24 @@ function searchEvents() {
             events[i].style.display = "none";
         }
 
+    }
+
+}
+
+function getCountdown(eventDate) {
+
+    const today = new Date();
+    const eventDay = new Date(eventDate);
+
+    const diff = eventDay - today;
+
+    const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+
+    if (days > 0) {
+        return "⏳ " + days + " days left";
+    }
+    else {
+        return "⚡ Event Started";
     }
 
 }
