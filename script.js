@@ -97,7 +97,23 @@ window.deleteEvent = async function (id) {
     }
 
 }
-
+window.registerEvent = async function (eventName) {
+    const studentName = prompt("Enter your name");
+    if (!studentName) {
+        alert("Registrations Cancelled");
+        return;
+    }
+    try {
+        await addDoc(collection(db, "registrations"), {
+            event: eventName,
+            student: studentName,
+            time: new Date()
+        });
+        alert("Registered for " + eventName);
+    } catch (error) {
+        console.error("Registration error:", error);
+    }
+};
 
 // Admin Login
 window.loginAdmin = async function () {
