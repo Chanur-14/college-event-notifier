@@ -29,6 +29,12 @@
       <h2>Available Events</h2>
       <input type="text" id="search" placeholder="Search events....." onkeyup="searchEvents()">
       <h2>Upcoming Events</h2>
+      <select id="collegeFilter" onchange="filterByCollege()">
+<option value="all">All Colleges</option>
+<option value="ABC College">ABC College</option>
+<option value="XYZ University">XYZ University</option>
+<option value="Tech Institute">Tech Institute</option>
+</select>
       <div id="events-container"></div>
       <div id="eventList">
         <!-- Events will be displayed here -->

@@ -163,7 +163,22 @@ window.searchEvents = function () {
     );
     displayEvents(filtered);
 };
+window.filterByCollege = function () {
 
+    const selectedCollege = document.getElementById("collegeFilter").value;
+
+    if (selectedCollege === "all") {
+        displayEvents(eventArray);
+        return;
+    }
+
+    const filtered = eventArray.filter(event =>
+        event.hostcollege === selectedCollege
+    );
+
+    displayEvents(filtered);
+
+}
 // COUNTDOWN TIMER
 function getCountdown(eventDate) {
     const today = new Date();
