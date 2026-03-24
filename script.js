@@ -42,7 +42,7 @@ async function loadEvents() {
         const eventDiv = document.createElement("div");
         eventDiv.classList.add("event-card");
         eventDiv.innerHTML = `
-        <div class="event-card">
+        ${getUpcomingBadge(event.date)}
         <img src="${event.image}"
         class="event-img">
         
@@ -51,7 +51,7 @@ async function loadEvents() {
         <p><b>Hosted by:</b> ${event.hostCollege}</p>
         <p class="countdown">${getCountdown(event.date)}</p>
         <button onclick="registerEvent('${event.eventName}')">Register</button>
-        <button class="delete-btn" onclick="deleteEvent('${event.id}')">Delete</button>
+        <button class="delete-btn" onclick="deleteEvent('${docItem.id}')">Delete</button>
         </div>
         `;
         eventList.appendChild(eventDiv);
@@ -214,6 +214,24 @@ function getCountdown(eventDate) {
     }
     else {
         return "⚡ Event Started";
+    }
+
+}
+
+function getUpcomingBadge(eventDate) {
+
+    const today = new Date();
+    const eventDay = new Date(eventDate);
+
+    const diff = eventDay - today;
+
+    const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+
+    if (days <= 3 && days >= 0) {
+        return `<div class="upcoming-badge">🔥 Upcoming</div>`;
+    }
+    else {
+        return "";
     }
 
 }

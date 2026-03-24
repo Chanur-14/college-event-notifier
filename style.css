@@ -199,3 +199,13 @@ button {
     font-weight: bold;
     margin: 10px 0;
 }
+
+.upcoming-badge {
+    background: red;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    display: inline-block;
+    margin-bottom: 10px;
+}
