@@ -12,36 +12,52 @@ console.log("Script loaded");
 // Load events from Firestore
 async function loadEvents() {
 
-    const eventList = document.getElementById("eventList");
+    const eventsContainer = document.getElementById("events-container");
 
-    if (!eventList) return;
-
-    eventList.innerHTML = "";
+    eventsContainer.innerHTML = "";
 
     const querySnapshot = await getDocs(collection(db, "events"));
 
-    let eventsArray = [];
+    querySnapshot.forEach((docItem) => {
 
-    querySnapshot.forEach((docSnap) => {
-        const data = docSnap.data();
-        const id = docSnap.id;
-
-        eventsArray.push({
-            id: id,
-            eventName: data.eventName,
-            date: data.date,
-            hostCollege: data.hostCollege
-        });
-    });
-
-    // sort by date
-    eventsArray.sort((a, b) => new Date(a.date) - new Date(b.date));
-
-    eventsArray.forEach(event => {
+        const event = docItem.data();
 
         const eventDiv = document.createElement("div");
+
         eventDiv.classList.add("event-card");
+
         eventDiv.innerHTML = `
+
+<img src="${event.image}" class="event-img">
+
+<h3>${event.eventName}</h3>
+
+<p><b>Date:</b> ${event.date}</p>
+
+<p><b>Hosted by:</b> ${event.hostCollege}</p>
+
+<p class="countdown">${getCountdown(event.date)}</p>
+
+<button onclick="registerEvent('${event.eventName}')">Register</button>
+
+<button onclick="deleteEvent('${docItem.id}')">Delete</button>
+
+`;
+
+        eventsContainer.appendChild(eventDiv);
+
+    });
+
+}
+
+// sort by date
+eventsArray.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+eventsArray.forEach(event => {
+
+    const eventDiv = document.createElement("div");
+    eventDiv.classList.add("event-card");
+    eventDiv.innerHTML = `
 
         ${getUpcomingBadge(event.date)}
         <div class="event-card">
@@ -56,11 +72,11 @@ async function loadEvents() {
         <button class="delete-btn" onclick="deleteEvent('${docItem.id}')">Delete</button>
         </div>
         `;
-        eventList.appendChild(eventDiv);
+    eventList.appendChild(eventDiv);
 
-    });
+});
 
-}
+
 
 loadEvents();
 
