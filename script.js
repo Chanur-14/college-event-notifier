@@ -8,7 +8,7 @@ import { collection, getDocs, addDoc, deleteDoc, doc }
 import { signInWithEmailAndPassword }
     from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
 
-
+console.log("Script loaded");
 // Load events from Firestore
 async function loadEvents() {
 
