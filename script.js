@@ -47,6 +47,7 @@ async function loadEvents() {
 // DISPLAY EVENTS
 function displayEvents(events) {
     const eventsContainer = document.getElementById("events-container");
+    document.getElementById("event-count").innerText = "Total Events:  " + events.length;
     eventsContainer.innerHTML = "";
 
     if (events.length === 0) {
