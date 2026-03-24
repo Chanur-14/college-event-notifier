@@ -42,7 +42,9 @@ async function loadEvents() {
         const eventDiv = document.createElement("div");
         eventDiv.classList.add("event-card");
         eventDiv.innerHTML = `
+
         ${getUpcomingBadge(event.date)}
+        <div class="event-card">
         <img src="${event.image}"
         class="event-img">
         
