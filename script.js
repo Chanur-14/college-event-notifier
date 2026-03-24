@@ -10,7 +10,7 @@ import {
 import { app } from "./firebase.js";
 
 const db = getFirestore(app);
-
+console.log("DB initialized:", db);
 let eventArray = [];
 
 window.addEventListener("DOMContentLoaded", () => {
