@@ -69,6 +69,7 @@ function displayEvents(events) {
       <p><b>Hosted by:</b> ${event.hostCollege}</p>
       <p class="countdown">${getCountdown(event.date)}</p>
       <button onclick="registerEvent('${event.eventName}')">Register</button>
+      <p class="Category">${event.Category}</p>
       <button onclick="deleteEvent('${event.id}')">Delete</button>
     `;
 
@@ -82,7 +83,7 @@ window.addEvent = async function () {
     const date = document.getElementById("date").value.trim();
     const hostCollege = document.getElementById("hostCollege").value.trim();
     const image = document.getElementById("eventimage").value.trim();
-
+    const Category = document.getElementById("Category").value;
     if (!eventName || !date || !hostCollege) {
         alert("Please fill all required fields.");
         return;
@@ -94,7 +95,8 @@ window.addEvent = async function () {
             date,
             hostCollege,
             image: image || "",
-            createdAt: new Date()
+            createdAt: new Date(),
+            Category: Category
         });
 
         alert("✅ Event Added Successfully!");
